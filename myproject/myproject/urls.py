@@ -15,6 +15,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 # address_software/urls.py
+from django.conf import settings # new
+from  django.conf.urls.static import static #new
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views  # Ensure this line is included
@@ -27,3 +29,6 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),  # Properly reference auth_views
     path('', include('myapp.urls')),  # Include your app URLs
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root = settings.STATIC_URL)
